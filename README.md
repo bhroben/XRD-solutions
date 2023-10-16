@@ -1,2 +1,2 @@
 # XRD-solutions
-Welcome to XDR Solutions, where the convergence of physics and technology transforms dreams into reality. 
+Welcome to XDR Solutions, where the convergence of physics and technology transforms dreams into reality. As pioneers in FPGA innovation, we specialize in realizing the extraordinary. With our expertise, every aspiration finds a purposeful path, redefining the limits of what's possible. Embrace a future where innovation meets precision, and dreams are not just envisioned but achieved. Experience unparalleled professionalism, unmatched expertise, and a commitment to excellence. XDR Solutions: Where Your Dreams Take Shape. 
