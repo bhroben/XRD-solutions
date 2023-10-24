@@ -45,43 +45,28 @@ end counter;
 architecture Behavioral of counter is
 
 signal count : unsigned(3 downto 0) :=(others => '0');
+signal q_temp: unsigned(3 downto 0) := "0000"; -- per inizializzare count a 0000
 
 begin
 
-process(Clk,RST)
-begin
 
-    if(rising_edge(Clk) and RST = '1') then
-        count <= (others => '0');
-    end if;
-
-end process;
-
-process(Clk,SW)
+process(Clk,SW,SW3,RST)
 begin
 
     if(rising_edge(Clk)) then
         if SW = '1' then
              count <= count + 1;
-        else
+        elsif SW = '0' then
              count <= count - 1;
-
-        end if;
-     end if;
-
-end process;
-
-process(Clk,SW3)
-begin
-
-    if(rising_edge(Clk)) then
-        if SW3 = '1' then
+        elsif SW3 = '1' then
              count <= count + 3;
-        else
+        elsif SW3 = '0' then
              count <= count + 1;
 
+        elsif RST = '1' then
+             count <= q_temp; --(others => '0');
         end if;
-     end if;
+    end if;
 
 end process;
 

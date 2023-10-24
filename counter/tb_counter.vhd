@@ -24,7 +24,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx leaf cells in this code.
@@ -47,11 +47,11 @@ component counter is
     );
 end component;
 
-signal O  : std_logic_vector(3 downto 0); -- :=(others=>'0');
+signal O  : std_logic_vector(3 downto 0) := (others=>'0');
 signal RST : std_logic :='0';
-signal SW :std_logic :='1';
+signal SW :std_logic :='0';
 signal SW3 : std_logic :='0';
-signal clk : std_logic := '0';
+signal Clk : std_logic := '0';
 constant clk_period : time := 10 ns;
 
 
@@ -67,10 +67,18 @@ DUT: counter
      );
 
 
-clk <= not clk after clk_period/2;
+Clk <= not Clk after clk_period/2;
 
 stim_p: process
 begin
+    wait for 40 ns;
+    SW <= '1';
+    wait for 40 ns;
+    SW <= '0';
+    wait for 40 ns;
+    RST<='1';
+    wait for 30 ns;
+    SW3<='1';
     wait;
 end process;
 
