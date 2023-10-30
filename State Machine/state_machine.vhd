@@ -15,7 +15,9 @@
 -- Revision:
 -- Revision 0.01 - File Created
 -- Additional Comments:
---
+-- implement a state machine: if the sequence if from 0000 -> 0001 -> 0011 -> 0111 ->1111 
+-- then turn on all 4 leds otherwise go back to 0000.
+
 ----------------------------------------------------------------------------------
 
 
