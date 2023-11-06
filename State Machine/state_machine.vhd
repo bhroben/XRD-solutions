@@ -58,7 +58,7 @@ begin
 process(Clk) is
 begin
    if rising_edge(Clk) then
-       if RST = '1' then
+       if RST = '0' then  -- 0 is high and 1 is low
            State <= S0;
        end if;
    end if;
