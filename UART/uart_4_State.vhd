@@ -31,28 +31,29 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity uart_tx is
+entity uart_4_state is
     generic(
-      period : integer := 10**9
+      period : integer := 10**8
     );  
     port(
       clk       : in std_logic;
-      data_line : in std_logic_vector(7 downto 0);
+      data_line : in std_logic_vector(3 downto 0);
       --output O is a single bit
-      O         : out std_logic  ;
-      valid     : in std_logic --button to start sending data
+      O         : out std_logic;
+      valid     : in std_logic; --button to start sending data
+      busy: out std_logic
     );
-end uart_tx;
+end uart_4_state;
 
-architecture Behavioral of uart_tx is
+architecture Behavioral of uart_4_state is
 
 signal clk_couter : integer :=0; 
 signal BAUDRATE_out : std_logic := '0'; --ritornaci. questo è il segnale per andare allo stato successivo; inizializza a 0 e quando period è raggiunto diventa 1 
 -- State machine deinition
-type state_t is (idle, data_valid, start, bit0, bit1, bit2, bit3, bit4, bit5, bit6, bit7, stop);
+type state_t is (idle, data_valid, start, bit0, bit1, bit2, bit3, stop);
 signal state : state_t; --inizializzare ad idle
-signal busy: std_logic;
-signal fake : std_logic := '0';
+
+
 
 
 
@@ -60,7 +61,7 @@ begin
 
 process(clk)
 begin 
-    fake <= '1';
+   
     if(rising_edge(clk)) then
         clk_couter <= clk_couter + 1;
         BAUDRATE_out <= '0';
@@ -111,39 +112,17 @@ if(rising_edge(clk)) then
                                         end if;
                                      
                     when bit3   => if BAUDRATE_out = '1' then
-                                        state <= bit4;
+                                        state <= stop;
                                          O <= data_line(3);
                                          end if;
-                                     
-                    when bit4   => if BAUDRATE_out = '1' then
-                                        state <= bit5;
-                                         O <= data_line(4);
-                                         end if;
-                                     
-                    when bit5   => if BAUDRATE_out = '1' then
-                                        state <= bit6;
-                                        O <= data_line(5);
-                                        end if;
-                    
-                    when bit6   => if BAUDRATE_out = '1' then
-                                    state <= bit7;
-                                     O <= data_line(6);
-                                     end if;
-                                     
-                    when bit7   => if BAUDRATE_out = '1' then
-                                        state<= stop;
-                                        end if;
-                    
+                   
                     when stop   => if BAUDRATE_out = '1' then
                                     state<= idle;
                                     busy <= '0';
                                     end if;
                     
     end case;
-    
-    --reset BAUDRATE 
-   -- BAUDRATE_out <= '0';
-        
+            
 end if;
 
 end process;
